@@ -1,0 +1,249 @@
+#include<iostream>
+using namespace std;
+ class node{
+    public:
+    int data;
+    node *left;
+    node *right;
+ };
+ class BST{
+    public:
+    node *root;
+    
+    BST()
+    {
+        root=NULL;
+
+    }
+    void create();
+    void  insert();
+    void preorder(node*);
+    void inorder(node*);
+    int minimumelement(node*);
+    void search();
+    int Height(node*);
+    void mirror(node*);
+
+
+ };
+
+ void BST :: create(){
+    int n;
+    cout<<"Enter the number of element in tree: ";
+    cin>>n;
+    while(n-- >0){
+        insert();
+       
+    }
+ }
+
+ void BST :: insert(){
+    node *curr;
+    cout<<"Enter the data: ";
+    curr = new node;
+    cin>>curr->data;
+    curr->left =NULL;
+    curr->right =NULL;
+    
+    if(root==NULL){
+        root = curr;
+    }
+    else
+    { 
+        node *temp;
+        temp =root;
+        while(true){
+            
+            if(curr->data < temp->data)
+            {
+                if(temp->left==NULL)
+                {
+                  temp->left= curr;
+                  break;
+                    
+                }
+                else{
+                   temp=temp->left;
+                }
+            }
+            else
+               {
+                if(curr->data > temp->data)
+                {
+                    if(temp->right==NULL){
+                        temp->right =  curr;
+                        break;
+                    }
+                    else{
+                        temp= temp->right;
+                    }
+                }
+               }
+
+        }
+
+    }
+ }
+ void BST ::preorder(node *root)
+ {
+    if(root == NULL){
+        return;
+    }
+    cout<<root->data<<" ";
+    preorder(root->left);
+    preorder(root->right);
+    
+
+ }
+ void BST ::inorder(node *root){
+    if(root==NULL){
+        return;
+
+    }
+    inorder(root->left);
+    cout<<root->data<<" ";
+    inorder(root->right);
+ }
+ void BST ::search()
+ {
+    int key;
+    cout<<"Enter the key to be search:";
+    cin>>key;
+    node *temp;
+    temp =root;
+    while(temp!=NULL)
+    {
+        if(temp->data==key){
+            cout<<key<<" found";
+            break;
+            }
+        else
+        {
+            if(key<temp->data){
+                    temp=temp->left;
+                }
+            else
+            {
+                temp=temp->right;
+                
+                }
+    }
+        if(temp==NULL)
+        {
+            cout<<key<<" Not Found";
+
+        }
+
+    }
+    }
+ 
+ int BST :: minimumelement(node *root){
+    node *temp;
+    temp =root;
+    if(temp==NULL){
+        return -1;
+    
+    }
+    while(temp->left!=NULL && temp!=NULL){
+        temp=temp->left;
+    }
+        
+        
+    if(temp!=NULL){
+        cout<<"Minimum element is:"<<temp->data;
+         }
+    else{
+        cout<<"Tree is empty: ";
+
+    }
+
+ }
+ int BST :: Height(node *root){
+    if(root==NULL){
+        return -1;
+
+    }
+    node *temp;
+    temp = root;
+    int left_= Height(temp->left);
+    int right_ = Height(temp->right);
+    return max(left_,right_)+1;
+
+     }
+
+ void BST :: mirror(node *root){
+    if(root==NULL){
+        return;
+
+    }
+    node *temp;
+    temp = root->left;
+    root->left =root->right;
+    root->right = temp;
+     
+    mirror(root->left);
+    mirror(root->right);
+
+ }    
+ 
+
+ int main(){
+  
+    BST b;
+    int ch;
+    cout<<"MENU\n1.create\n2.preorder\n3.inorder\n4.minimumelement\n5.searchelement\n6.Height\n7.Mirror";
+    cout<<"\n";
+    
+    while(true)
+    {
+        cout<<endl;
+        cout<<"Enter the operation:"<<endl;
+        cin>>ch;    
+    
+    
+    switch (ch)
+    {
+    case 1:
+        b.create();
+        break;
+        cout<<endl;
+
+    case 2:
+        cout<<"Preorder sequence: ";
+        b.preorder(b.root);
+        break;
+        cout<<endl;
+    
+
+    case 3:
+        cout<<"Inorder sequence:";
+        b.inorder(b.root);
+        break;
+        cout<<endl;
+
+    case 4:
+        
+        b.minimumelement(b.root);
+        break;
+        cout<<endl;
+
+    case 5:
+        b.search();
+        break;
+        cout<<endl;
+
+    case 6:
+        cout<<"Height:";
+        cout<<b.Height(b.root);
+        break;     
+
+    case 7:
+        b.mirror(b.root);
+        break;    
+
+    default:
+        break;
+
+    }
+ }
+ }
