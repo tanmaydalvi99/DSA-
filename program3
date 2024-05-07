@@ -1,0 +1,113 @@
+#include<iostream>
+using namespace std;
+
+struct node{
+    string name;
+    int count;
+    struct node* child[10];
+}* root;
+
+class BH{
+
+    public:
+    void create();
+    void display(node* r1);
+
+    
+    BH(){
+        root=NULL;
+    }
+};
+
+void BH::create(){
+
+    root = new node();
+
+    cout<<"Enter the of the BOOK : ";
+    cin>>root->name;
+    cout<<"Enter the no. of chapters in "<<root->name<<" BOOK : ";
+    cin>>root->count;
+
+    for(int i=0;i<root->count;i++)
+    {
+        root->child[i] = new node();
+        cout<<"Enter the chapter "<<i+1<<" name : ";
+        cin>>root->child[i]->name;
+        cout<<"Enter the no. of Section in "<<root->child[i]->name<<" chapter : ";
+        cin>>root->child[i]->count;
+    
+        for(int j=0;j<root->child[i]->count;j++)
+        {
+        root->child[i]->child[j] = new node();
+        cout<<"Enter the Section "<<j+1<<" name : ";
+        cin>>root->child[i]->child[j]->name;
+        cout<<"Enter the no. of SubSection in "<<root->child[i]->child[j]->name<<" Section : ";
+        cin>>root->child[i]->child[j]->count;
+        
+        for(int k=0;k<root->child[i]->child[j]->count;k++)
+        {
+        root->child[i]->child[j]->child[k] = new node();
+        cout<<"Enter the SubSection "<<j+1<<" name : ";
+        cin>>root->child[i]->child[j]->child[k]->name;
+        }
+        
+        }
+}
+}
+
+void BH::display(node *r1)
+{
+    cout<<"-------BOOK HEIRECHY--------"<<endl;
+    cout<<"BOOK Name : "<<r1->name<<endl;
+
+    for(int i=0;i<r1->count;i++)
+    {
+        cout<<"Chapter "<<i+1<<" Name : "<<r1->child[i]->name<<endl;
+        
+
+    for(int j=0;i<r1->child[i]->count;j++)
+    {
+        cout<<"Section "<<j+1<<" Name : "<<r1->child[i]->child[j]->name<<endl;
+
+    for(int k=0;i<r1->child[i]->child[j]->count;k++)
+    {
+        cout<<"SubSection "<<k+1<<" Name : "<<r1->child[i]->child[j]->child[k]->name<<"\n\n";
+
+
+    }
+    }
+
+}
+}
+
+int main()
+{
+    BH bh;
+    int choice;
+    while(1)
+    {
+        cout<<"------MENU--------"<<endl;
+        cout<<"1.Create"<<endl;
+        cout<<"2.Display"<<endl;
+        cout<<"3.Exit"<<endl;
+        cout<<"\n\nEnter your choice : ";
+        cin>>choice;
+        switch(choice){
+            case 1:
+            bh.create();
+            break;
+
+            case 2:
+            bh.display(root);
+            break;
+
+            case 3:
+            exit(1);
+
+            default:
+            cout<<"Wrong choice.....";
+        }
+
+    }
+    return 0;
+}
